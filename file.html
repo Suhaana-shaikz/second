@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@latest/fonts/remixicon.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<style>
+    input::placeholder{
+        padding-left: 40px;
+        font-weight: 600;
+        font-size: medium;
+    }
+    #test{
+        display: none;
+    }
+    img{
+        height: 150px;
+        width: 200px;
+    }
+    .detail{
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         flex-direction: column;
+         gap: 5px;
+    }
+    
+
+</style>
+<body>
+ 
+
+<div class="main" style="background-color: rgb(253, 252, 252);height: 95vh;">
+    <div style="display: flex;justify-content:center;align-items:end; height: 300px;" >   
+        <div style="height: 100px; width: 2000px; background-color: rgb(186, 155, 161);display: flex;justify-content: center;align-items: center; gap: 10px;">
+             <input type="text" placeholder="Enter Your country" class="input" style="border-radius:50px; display: border; height: 50px;width: 1000px;">
+             <button class="search" style="height: 50px; border-radius: 5px ;width:100px;">search</button>
+        </div>
+    </div>
+    <div class="detail" style="display: flex; justify-content: center;align-items: center;">
+
+      <div  class= " flex justify-start items-start  flex-col gap-5 "  >
+        <img id="test" src="" alt="" class="h-24 w-52 ">
+        <p id="test1" class=" font-bold "></p>
+        <p id="test2" class=" font-bold "></p>
+        <p id="test3" class=" font-bold "></p>
+        <p id="test4" class="font-bold"></p>
+      </div>
+    </div>
+
+
+
+</div>
+
+<script>
+    let input=document.querySelector('.input');
+    let search=document.querySelector('.search');
+    // let img=document.querySelector('img');
+    let flagname;
+    let continent;
+    let languages;
+    let capital;
+    let languageslist;
+    let population;
+    let test = document.getElementById('test')
+    let test1 = document.getElementById('test1')
+    let test2= document.getElementById('test2')
+    let test3= document.getElementById('test3')
+    let test4= document.getElementById('test4')
+    console.log(test)
+
+    search.addEventListener("click",()=>{
+        countryName=input.value;
+        countryurl=`https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
+        console.log(countryurl)
+       fetch(countryurl)
+         .then((response) =>  response.json())
+         .then ((data) => {console.log(data)
+                        console.log(data[1])
+                        console.log(data[0].flags.svg)
+                       let flagname =data [0].flags.svg
+                       let continent=data[0].continents[0];
+                       let capital=data[0].capital[0];
+                       let languages=data[0].languages;
+                       let languageslist=Object.values(languages).join(',');
+                       let population=data[0].population;
+
+
+
+
+                    test1.innerText+=`capital:${capital}`
+                    test2.innerText +=`continent: ${continent}`
+                    test3.innerText +=`languages: ${languageslist}`
+                    test.innerHTML += test.setAttribute('src',flagname)
+                    test4.innerText+=`population:${population}`
+                    test.style.display='block';
+                    
+                       
+                       
+                       
+                        
+                    })
+
+                })
+                
+               
+            </script>  
+           
+</body>
+</html>
